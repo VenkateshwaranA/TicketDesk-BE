@@ -1,0 +1,37 @@
+{
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "root": "apps",
+  "projects": {
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": { "tsConfigPath": "apps/api-gateway/tsconfig.json" }
+    },
+    "auth-service": {
+      "type": "application",
+      "root": "apps/auth-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/auth-service/tsconfig.json" }
+    },
+    "users-service": {
+      "type": "application",
+      "root": "apps/users-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/users-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/users-service/tsconfig.json" }
+    },
+    "tickets-service": {
+      "type": "application",
+      "root": "apps/tickets-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/tickets-service/src",
+      "compilerOptions": { "tsConfigPath": "apps/tickets-service/tsconfig.json" }
+    }
+  }
+}
+
+
