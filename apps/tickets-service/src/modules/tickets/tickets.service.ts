@@ -15,7 +15,14 @@ export class TicketsService {
 
   async create(body: Partial<Ticket>) {
     try {
-      const doc = await this.ticketModel.create(body);
+      const doc = await this.ticketModel.create({
+        title: body.title!,
+        description: body.description,
+        ownerId: body.ownerId!,
+        assignedTo: body.assignedTo ?? null,
+        status: (body as any).status ?? 'OPEN',
+        priority: (body as any).priority ?? 'MEDIUM',
+      } as Partial<Ticket>);
       return { id: String(doc._id) };
     } catch (error) {
       console.error(error);
@@ -24,7 +31,13 @@ export class TicketsService {
   }
 
   async update(id: string, body: Partial<Ticket>) {
-    await this.ticketModel.updateOne({ _id: id }, body);
+    const up: any = {};
+    if (typeof body.title === 'string') up.title = body.title;
+    if (typeof body.description === 'string') up.description = body.description;
+    if (typeof body.assignedTo !== 'undefined') up.assignedTo = body.assignedTo;
+    if (typeof (body as any).status === 'string') up.status = (body as any).status;
+    if (typeof (body as any).priority === 'string') up.priority = (body as any).priority;
+    await this.ticketModel.updateOne({ _id: id }, up);
     return { id };
   }
 

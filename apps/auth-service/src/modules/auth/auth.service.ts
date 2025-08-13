@@ -64,6 +64,7 @@ export class AuthService {
       .split(',')
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean);
+    console.log(adminEmails,"adminEmails");
     let user = await this.userModel.findOne({ email: input.email ?? undefined });
 
     if (!user && input.email) {

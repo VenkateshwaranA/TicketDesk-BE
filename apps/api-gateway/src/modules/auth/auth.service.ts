@@ -33,6 +33,7 @@ export class AuthService {
       const displayName = oauth?.profile?.displayName;
       const port = this.config.get<string>('AUTH_PORT') ?? '3011';
       const url = `${this.config.get<string>('BACKEND_URL')}:${port}/auth/oauth`;
+      const roles= oauth?.profile?.roles || [];
       const body = { email, provider, providerId, displayName };
       const res = await firstValueFrom(this.http.post(url, body));
       return res.data;
@@ -53,7 +54,7 @@ export class AuthService {
       return res.data;
     } catch (error) {
       console.error('Error fetching fresh profile:', error);
-      throw new UnauthorizedException('Failed to fetch profile');
+      // throw new UnauthorizedException('Failed to fetch profile');
 
     }
   }

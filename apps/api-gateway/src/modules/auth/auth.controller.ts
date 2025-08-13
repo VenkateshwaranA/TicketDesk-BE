@@ -31,9 +31,11 @@ export class AuthController {
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleCallback(@Req() req: any, @Res() res: Response) {
+    console.log('Google OAuth callback', req.user);
     const { accessToken } = await this.authService.loginFromOAuthProfile(req.user);
     const frontendUrl = this.config.get<string>('FRONTEND_REDIRECT_URL') ?? 'http://localhost:5173/';
-    return res.redirect(`${frontendUrl}#token=${encodeURIComponent(accessToken)}`);
+    const separator = frontendUrl.includes('?') ? '&' : '?';
+    return res.redirect(`${frontendUrl}${separator}token=${encodeURIComponent(accessToken)}`);
   }
 
 

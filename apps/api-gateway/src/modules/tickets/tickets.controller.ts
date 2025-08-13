@@ -21,11 +21,11 @@ class CreateTicketDto {
 
   @IsOptional()
   @IsString()
-  status?: string | null;
+  status?: 'OPEN' | 'IN_PROGRESS' | 'DONE' | null;
 
   @IsOptional()
   @IsString()
-  priority?: string | null;
+  priority?: 'LOW' | 'MEDIUM' | 'HIGH' | null;
 }
 
 class UpdateTicketDto {
@@ -47,11 +47,11 @@ class UpdateTicketDto {
 
   @IsOptional()
   @IsString()
-  status?: string | null;
+  status?: 'OPEN' | 'IN_PROGRESS' | 'DONE' | null;
 
   @IsOptional()
   @IsString()
-  priority?: string | null;
+  priority?: 'LOW' | 'MEDIUM' | 'HIGH' | null;
 }
 
 @Controller('tickets')
