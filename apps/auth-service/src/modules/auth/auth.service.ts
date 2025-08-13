@@ -25,6 +25,7 @@ export class AuthService {
       .filter(Boolean);
     let user = await this.userModel.findOne({ email: dto.email }).select('+passwordHash');
     if (!user) {
+      console.log(`Creating new user: ${dto.email}`);
       return this.userModel.create({
         email: dto.email,
         roles: adminEmails.includes(dto.email.toLowerCase()) ? ['admin'] : ['user'],
