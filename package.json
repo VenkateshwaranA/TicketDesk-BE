@@ -9,12 +9,9 @@
     "start:auth": "nest start auth-service --watch",
     "start:users": "nest start users-service --watch",
     "start:tickets": "nest start tickets-service --watch",
-    "start:all": "concurrently \"npm run start:gateway\" \"npm run start:auth\" \"npm run start:users\" \"npm run start:tickets\"",
+    "start": "concurrently \"npm run start:gateway\" \"npm run start:auth\" \"npm run start:users\" \"npm run start:tickets\"",
     "build": "nest build && tsc-alias -p tsconfig.json",
     "build:all": "nest build api-gateway && nest build auth-service && nest build users-service && nest build tickets-service && tsc-alias -p tsconfig.json",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
@@ -54,7 +51,6 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "tsc-alias": "^1.8.8",
     "@nestjs/cli": "^10.4.5",
     "@nestjs/schematics": "^10.0.3",
     "@nestjs/testing": "^10.0.0",
@@ -68,6 +64,7 @@
     "@types/passport-google-oauth20": "^2.0.16",
     "@types/passport-jwt": "^3.0.13",
     "@types/uuid": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -77,6 +74,7 @@
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   }

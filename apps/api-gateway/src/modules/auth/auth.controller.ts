@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService, private readonly config: ConfigService) {}
+  constructor(private readonly authService: AuthService, private readonly config: ConfigService) { }
 
   @Post('login')
   async login(@Body() dto: LoginDto) {
@@ -26,7 +26,7 @@ export class AuthController {
   @Get('google')
   @UseGuards(AuthGuard('google'))
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async googleAuth() {}
+  async googleAuth() { }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
@@ -36,29 +36,7 @@ export class AuthController {
     return res.redirect(`${frontendUrl}#token=${encodeURIComponent(accessToken)}`);
   }
 
-  @Get('github')
-  @UseGuards(AuthGuard('github'))
-  async githubAuth() {}
 
-  @Get('github/callback')
-  @UseGuards(AuthGuard('github'))
-  async githubCallback(@Req() req: any, @Res() res: Response) {
-    const { accessToken } = await this.authService.loginFromOAuthProfile(req.user);
-    const frontendUrl = this.config.get<string>('FRONTEND_REDIRECT_URL') ?? 'http://localhost:5173/';
-    return res.redirect(`${frontendUrl}#token=${encodeURIComponent(accessToken)}`);
-  }
-
-  @Get('facebook')
-  @UseGuards(AuthGuard('facebook'))
-  async facebookAuth() {}
-
-  @Get('facebook/callback')
-  @UseGuards(AuthGuard('facebook'))
-  async facebookCallback(@Req() req: any, @Res() res: Response) {
-    const { accessToken } = await this.authService.loginFromOAuthProfile(req.user);
-    const frontendUrl = this.config.get<string>('FRONTEND_REDIRECT_URL') ?? 'http://localhost:5173/';
-    return res.redirect(`${frontendUrl}#token=${encodeURIComponent(accessToken)}`);
-  }
 }
 
 

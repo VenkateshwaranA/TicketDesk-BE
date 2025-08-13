@@ -6,7 +6,7 @@ import { TicketsModule } from './tickets/tickets.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI ?? 'mongodb://localhost:27017/ticketing-tickets'),
+    MongooseModule.forRoot(process.env.MONGO_URI!),
     TicketsModule
   ]
 })

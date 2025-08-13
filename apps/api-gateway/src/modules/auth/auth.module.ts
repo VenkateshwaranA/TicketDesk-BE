@@ -6,8 +6,6 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
-import { GithubStrategy } from './strategies/github.strategy';
-import { FacebookStrategy } from './strategies/facebook.strategy';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
@@ -25,7 +23,7 @@ import { HttpModule } from '@nestjs/axios';
     }),
     HttpModule
   ],
-  providers: [AuthService, JwtStrategy, GoogleStrategy, GithubStrategy, FacebookStrategy],
+  providers: [AuthService, JwtStrategy, GoogleStrategy],
   controllers: [AuthController]
 })
 export class AuthModule {}

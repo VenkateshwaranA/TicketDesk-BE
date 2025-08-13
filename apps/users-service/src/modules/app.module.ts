@@ -6,7 +6,7 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI ?? 'mongodb://localhost:27017/ticketing-users'),
+    MongooseModule.forRoot(process.env.MONGO_URI!),
     UsersModule
   ]
 })

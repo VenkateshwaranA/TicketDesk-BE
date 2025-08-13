@@ -17,8 +17,8 @@ export class User {
   @Prop({ type: [String], default: [] })
   permissions!: string[];
 
-  @Prop({ type: String, enum: ['google', 'github', 'facebook', 'local'], default: 'local' })
-  provider!: 'google' | 'github' | 'facebook' | 'local';
+  @Prop({ type: String, enum: ['google', 'local'], default: 'local' })
+  provider!: 'google' | 'local';
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

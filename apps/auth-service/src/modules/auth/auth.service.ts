@@ -16,7 +16,7 @@ export class AuthService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     private readonly http: HttpService,
     private readonly config: ConfigService
-  ) {}
+  ) { }
 
   async login(dto: LoginDto) {
     const adminEmails = (this.config.get<string>('ADMIN_EMAILS') ?? '')
@@ -36,7 +36,7 @@ export class AuthService {
     try {
       const usersPort = this.config.get<string>('USERS_PORT') ?? '3012';
       await firstValueFrom(
-        this.http.post(`http://localhost:${usersPort}/users`, {
+        this.http.post(`${this.config.get<string>("BACKEND_URL")}:${usersPort}/users`, {
           email: user.email,
           roles: user.roles,
           permissions: user.permissions,
@@ -49,13 +49,13 @@ export class AuthService {
     return { accessToken: await this.jwtService.signAsync(payload) };
   }
 
-  async loginFromOAuth(input: { email?: string; provider: 'google' | 'github' | 'facebook'; providerId: string; displayName?: string }) {
+  async loginFromOAuth(input: { email?: string; provider: 'google'; providerId: string; displayName?: string }) {
     const adminEmails = (this.config.get<string>('ADMIN_EMAILS') ?? '')
       .split(',')
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean);
-    // Try to locate by providerId first, else by email, else create
     let user = await this.userModel.findOne({ email: input.email ?? undefined });
+    
     if (!user && input.email) {
       const isAdmin = input.email ? adminEmails.includes(input.email.toLowerCase()) : false;
       user = await this.userModel.create({
@@ -65,8 +65,8 @@ export class AuthService {
         provider: input.provider
       } as Partial<User>);
     }
+
     if (!user) {
-      // As a last resort, create a placeholder email
       user = await this.userModel.create({
         email: `${input.provider}-${input.providerId}@example.local`,
         roles: ['user'],
@@ -74,7 +74,6 @@ export class AuthService {
         provider: input.provider
       } as Partial<User>);
     }
-    // Upgrade role to admin if email is in ADMIN_EMAILS
     if (input.email && adminEmails.includes(input.email.toLowerCase()) && !user.roles.includes('admin')) {
       user.roles = Array.from(new Set([...(user.roles ?? []), 'admin']));
       await user.save();
@@ -82,7 +81,7 @@ export class AuthService {
     // Mirror user to users-service for admin listing/updates
     try {
       const usersPort = this.config.get<string>('USERS_PORT') ?? '3012';
-      await firstValueFrom(this.http.post(`http://localhost:${usersPort}/users`, { email: user.email, roles: user.roles, permissions: user.permissions }));
+      await firstValueFrom(this.http.post(`${this.config.get<string>("BACKEND_URL")}:${usersPort}/users`, { email: user.email, roles: user.roles, permissions: user.permissions }));
     } catch {
       // Ignore if already exists or service unavailable
     }

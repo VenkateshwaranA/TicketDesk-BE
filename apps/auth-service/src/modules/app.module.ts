@@ -6,10 +6,10 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI ?? 'mongodb://localhost:27017/ticketing-auth'),
+    MongooseModule.forRoot(process.env.MONGO_URI!),
     AuthModule
   ]
 })
-export class AppModule {}
+export class AppModule { }
 
 

@@ -20,15 +20,15 @@ export class TicketsController {
     return this.tickets.update(id, body);
   }
 
-  @Patch(':id/assign/:userId')
-  async assign(@Param('id') id: string, @Param('userId') userId: string) {
-    return this.tickets.assign(id, userId);
-  }
+  // @Patch(':id/assign/:userId')
+  // async assign(@Param('id') id: string, @Param('userId') userId: string) {
+  //   return this.tickets.assign(id, userId);
+  // }
 
-  @Patch(':id/unassign')
-  async unassign(@Param('id') id: string) {
-    return this.tickets.unassign(id);
-  }
+  // @Patch(':id/unassign')
+  // async unassign(@Param('id') id: string) {
+  //   return this.tickets.unassign(id);
+  // }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {

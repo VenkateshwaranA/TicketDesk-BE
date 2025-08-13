@@ -10,7 +10,7 @@ class OAuthDto {
   email?: string;
 
   @IsString()
-  provider!: 'google' | 'github' | 'facebook';
+  provider!: 'google';
 
   @IsString()
   providerId!: string;
@@ -22,7 +22,7 @@ class OAuthDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('login')
   async login(@Body() dto: LoginDto) {

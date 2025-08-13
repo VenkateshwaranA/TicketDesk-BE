@@ -28,15 +28,15 @@ export class TicketsService {
     return { id };
   }
 
-  async assign(id: string, userId: string) {
-    await this.ticketModel.updateOne({ _id: id }, { assignedTo: userId });
-    return { id, assignedTo: userId };
-  }
+  // async assign(id: string, userId: string) {
+  //   await this.ticketModel.updateOne({ _id: id }, { assignedTo: userId });
+  //   return { id, assignedTo: userId };
+  // }
 
-  async unassign(id: string) {
-    await this.ticketModel.updateOne({ _id: id }, { assignedTo: null });
-    return { id, assignedTo: null };
-  }
+  // async unassign(id: string) {
+  //   await this.ticketModel.updateOne({ _id: id }, { assignedTo: null });
+  //   return { id, assignedTo: null };
+  // }
 
   async remove(id: string) {
     await this.ticketModel.deleteOne({ _id: id });
