@@ -91,19 +91,15 @@ Architecture diagram
 
 ```mermaid
 flowchart LR
-  FE["React App (Vite) :5173"] -->|HTTP /api| GW["API Gateway (NestJS) :GATEWAY_PORT\nRBAC + Throttle + Cache(optional)"]
-
-  GW -->|/auth/*| AUTH["Auth Service (NestJS) :AUTH_PORT"]
-  GW -->|/users/*| USERS["Users Service (NestJS) :USERS_PORT"]
-  GW -->|/tickets/*| TICKETS["Tickets Service (NestJS) :TICKETS_PORT"]
-
-  AUTH -->|MongoDB| M1[("MongoDB: auth DB")]
-  USERS -->|MongoDB| M2[("MongoDB: users DB")]
-  TICKETS -->|MongoDB| M3[("MongoDB: tickets DB")]
-
+  FE["React App (Vite) :5173"] -->|HTTP /api| GW["API Gateway (NestJS) :3000\nRBAC + Throttle + Cache(optional)"]
+  GW -->|/auth/*| AUTH["Auth Service (NestJS) :3011"]
+  GW -->|/users/*| USERS["Users Service (NestJS) :3012"]
+  GW -->|/tickets/*| TICKETS["Tickets Service (NestJS) :3013"]
+  AUTH -->|MongoDB| M1[("MongoDB")]
+  USERS -->|MongoDB| M2[("MongoDB")]
+  TICKETS -->|MongoDB| M3[("MongoDB")]
   GW -. cache .-> REDIS[("Redis (optional)")]
   GOOGLE["Google OAuth2"] -->|callback| GW
-  AUTH -. mirror user .-> USERS
 ```
 
 Notes
