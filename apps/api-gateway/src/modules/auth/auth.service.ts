@@ -16,6 +16,7 @@ export class AuthService {
   async loginWithPassword(dto: LoginDto) {
     const port = this.config.get<string>('AUTH_PORT') ?? '3011';
     const url = `${this.config.get<string>('BACKEND_URL')}:${port}/auth/login`;
+    console.log('loginWithPassword', url, dto);
     try {
       const res = await firstValueFrom(this.http.post(url, dto));
       return res.data;

@@ -24,7 +24,16 @@ export class AuthService {
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean);
     let user = await this.userModel.findOne({ email: dto.email }).select('+passwordHash');
-    if (!user) throw new UnauthorizedException('Invalid credentials');
+    if (!user) {
+      return this.userModel.create({
+        email: dto.email,
+        roles: adminEmails.includes(dto.email.toLowerCase()) ? ['admin'] : ['user'],
+        permissions: [],
+        provider: 'local',
+      } as Partial<User>);
+
+
+    }
     const ok = user.passwordHash ? await bcrypt.compare(dto.password, user.passwordHash) : false;
     if (!ok) throw new UnauthorizedException('Invalid credentials');
     // Upgrade role to admin if email is in ADMIN_EMAILS
@@ -55,7 +64,7 @@ export class AuthService {
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean);
     let user = await this.userModel.findOne({ email: input.email ?? undefined });
-    
+
     if (!user && input.email) {
       const isAdmin = input.email ? adminEmails.includes(input.email.toLowerCase()) : false;
       user = await this.userModel.create({
